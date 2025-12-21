@@ -2,16 +2,15 @@ package com.pos.model;
 
 import java.time.LocalDateTime;
 
-import com.pos.domain.UserRole;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.validation.constraints.Email;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -21,7 +20,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-public class User {
+@Builder
+public class Customer {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,27 +30,21 @@ public class User {
 	@Column(nullable = false)
 	private String fullName;
 	
-	@Column(nullable = false, unique = true)
-	@Email(message = "Email should be valid")
 	private String email;
 	
-	@Column(nullable = false)
-	private String password;
-	
 	private String phone;
-	
-	@ManyToOne
-	private Branch branch;
-	
-	@ManyToOne
-	private Store store;
-	
-	@Column(nullable = false)
-	private UserRole role;
 	
 	private LocalDateTime createdAt;
 	
 	private LocalDateTime updatedAt;
 	
-	private LocalDateTime lastLogin;
+	@PrePersist
+	protected void onCreate() {
+		createdAt = LocalDateTime.now();
+	}
+	
+	@PreUpdate
+	protected void onUpdate() {
+		updatedAt = LocalDateTime.now();
+	}
 }

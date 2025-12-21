@@ -8,11 +8,11 @@ import com.pos.payload.dto.ProductDTO;
 
 public interface ProductService {
 
-	ProductDTO createProduct(ProductDTO productDto, User user)  throws UserException;
+	ProductDTO createProduct(ProductDTO productDto, User user)  throws Exception;
 	
-	ProductDTO updateProduct(Long id, ProductDTO prodDto, User user)  throws UserException;
+	ProductDTO updateProduct(Long id, ProductDTO prodDto, User user) throws Exception;
 	
-	void deleteProduct(Long id, User user);
+	void deleteProduct(Long id, User user) throws Exception;
 	
 	List<ProductDTO> getProductByStoreId(Long storeId);
 	

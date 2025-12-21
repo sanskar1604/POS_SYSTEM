@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.pos.domain.UserRole;
-import com.pos.exception.UserException;
 import com.pos.mapper.CategoryMapper;
 import com.pos.model.Category;
 import com.pos.model.Store;
@@ -28,10 +27,10 @@ public class CategoryServiceImpl implements CategoryService {
 	private final StoreRepository storeRepository;
 	
 	@Override
-	public CategoryDTO createCategory(CategoryDTO categoryDto) throws UserException {
+	public CategoryDTO createCategory(CategoryDTO categoryDto) throws Exception {
 		User user = userService.getCurrentUser();
 		
-		Store store = storeRepository.findById(categoryDto.getStoreId()).orElseThrow(() -> new UserException("store not found"));
+		Store store = storeRepository.findById(categoryDto.getStoreId()).orElseThrow(() -> new Exception("store not found"));
 		
 		Category category = new Category();
 		category.setStore(store);
@@ -50,8 +49,8 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public CategoryDTO updateCategory(CategoryDTO categoryDto, Long id) throws UserException {
-		Category category = categoryRepository.findById(id).orElseThrow(() -> new UserException("Category not found"));
+	public CategoryDTO updateCategory(CategoryDTO categoryDto, Long id) throws Exception {
+		Category category = categoryRepository.findById(id).orElseThrow(() -> new Exception("Category not found"));
 		User user = userService.getCurrentUser();
 		
 		category.setName(categoryDto.getName());
@@ -62,8 +61,8 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public void deleteCategory(Long id) throws UserException {
-		Category category = categoryRepository.findById(id).orElseThrow(() -> new UserException("Categiry not found"));
+	public void deleteCategory(Long id) throws Exception {
+		Category category = categoryRepository.findById(id).orElseThrow(() -> new Exception("Categiry not found"));
 		User user = userService.getCurrentUser();
 		
 		checkAuthoriy(user, category.getStore());
@@ -72,13 +71,13 @@ public class CategoryServiceImpl implements CategoryService {
 		
 	}
 	
-	private void checkAuthoriy(User user, Store store) throws UserException {
+	private void checkAuthoriy(User user, Store store) throws Exception {
 		boolean isAdmin = user.getRole().equals(UserRole.ROLE_STORE_ADMIN);
 		boolean isManeger = user.getRole().equals(UserRole.ROLE_STORE_MANAGER);
 		boolean isSameStore = user.equals(store.getStoreAdmin());
 		
 		if(!(isAdmin && isSameStore) && !isManeger) {
-			throw new UserException("You don't have permission to manage this category");
+			throw new Exception("You don't have permission to manage this category");
 		}
 	}
 

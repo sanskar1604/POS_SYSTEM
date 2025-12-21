@@ -27,10 +27,10 @@ public class InventoryServiceImpl implements InventoryService {
 	private final ProductRepository productRepository;
 
 	@Override
-	public InventoryDTO createInventory(InventoryDTO inventoryDto) {
+	public InventoryDTO createInventory(InventoryDTO inventoryDto) throws Exception {
 		
-		Branch branch = branchRepository.findById(inventoryDto.getBranchId()).orElseThrow(() -> new UserException("Branch not exist..."));
-		Product product = productRepository.findById(inventoryDto.getProductId()).orElseThrow(() -> new UserException("Product not exist..."));
+		Branch branch = branchRepository.findById(inventoryDto.getBranchId()).orElseThrow(() -> new Exception("Branch not exist..."));
+		Product product = productRepository.findById(inventoryDto.getProductId()).orElseThrow(() -> new Exception("Product not exist..."));
 		
 		Inventory inventory = InventoryMapper.toEntity(inventoryDto, branch, product);
 		
@@ -40,8 +40,8 @@ public class InventoryServiceImpl implements InventoryService {
 	}
 
 	@Override
-	public InventoryDTO updateInventory(Long id, InventoryDTO inventoryDto) {
-		Inventory inventory = inventoryRepository.findById(id).orElseThrow(() -> new UserException("Inventory not found..."));
+	public InventoryDTO updateInventory(Long id, InventoryDTO inventoryDto) throws Exception {
+		Inventory inventory = inventoryRepository.findById(id).orElseThrow(() -> new Exception("Inventory not found..."));
 		
 		inventory.setQuantity(inventoryDto.getQuantity());
 		Inventory updatedInventory = inventoryRepository.save(inventory);
@@ -49,16 +49,16 @@ public class InventoryServiceImpl implements InventoryService {
 	}
 
 	@Override
-	public void deleteInventory(Long id) {
-		Inventory inventory = inventoryRepository.findById(id).orElseThrow(() -> new UserException("Inventory not found..."));
+	public void deleteInventory(Long id) throws Exception {
+		Inventory inventory = inventoryRepository.findById(id).orElseThrow(() -> new Exception("Inventory not found..."));
 		
 		inventoryRepository.delete(inventory);
 		
 	}
 
 	@Override
-	public InventoryDTO getInventoryById(Long id) {
-		Inventory inventory = inventoryRepository.findById(id).orElseThrow(() -> new UserException("Inventory not found..."));
+	public InventoryDTO getInventoryById(Long id) throws Exception {
+		Inventory inventory = inventoryRepository.findById(id).orElseThrow(() -> new Exception("Inventory not found..."));
 		return InventoryMapper.toDTO(inventory);
 	}
 

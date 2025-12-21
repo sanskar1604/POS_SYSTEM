@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pos.exception.UserException;
 import com.pos.payload.dto.BranchDTO;
 import com.pos.payload.response.ApiResponse;
 import com.pos.service.BranchService;
@@ -30,13 +31,13 @@ public class BranchController {
 	
 	@PostMapping
 	@Operation(summary = "Create Branch")
-	public ResponseEntity<BranchDTO> createBranch(@RequestBody BranchDTO branchDto){
+	public ResponseEntity<BranchDTO> createBranch(@RequestBody BranchDTO branchDto) throws Exception{
 		return ResponseEntity.ok(branchService.createBranch(branchDto));
 	}
 	
 	@GetMapping("/{id}")
 	@Operation(summary = "Get branch by branch_id")
-	public ResponseEntity<BranchDTO> getBranchById(@PathVariable Long id){
+	public ResponseEntity<BranchDTO> getBranchById(@PathVariable Long id) throws  Exception{
 		return ResponseEntity.ok(branchService.getBranchById(id));
 	}
 	
@@ -48,13 +49,13 @@ public class BranchController {
 	
 	@PutMapping("/{id}")
 	@Operation(summary = "Update Branch by branch_id")
-	public ResponseEntity<BranchDTO> updateBranch(@PathVariable Long id, @RequestBody BranchDTO branchDto){
+	public ResponseEntity<BranchDTO> updateBranch(@PathVariable Long id, @RequestBody BranchDTO branchDto) throws Exception{
 		return ResponseEntity.ok(branchService.updateBranch(id, branchDto));
 	}
 	
 	@DeleteMapping("/{id}")
 	@Operation(summary = "Delete Branch by branch_id")
-	public ResponseEntity<ApiResponse> deleteBranch(@PathVariable Long id){
+	public ResponseEntity<ApiResponse> deleteBranch(@PathVariable Long id) throws Exception{
 		branchService.deleteBranch(id);
 		
 		ApiResponse apiResponse = new ApiResponse();

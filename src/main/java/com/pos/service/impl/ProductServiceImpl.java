@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.pos.exception.UserException;
 import com.pos.mapper.ProductMapper;
 import com.pos.model.Category;
 import com.pos.model.Product;
@@ -31,10 +30,10 @@ public class ProductServiceImpl implements ProductService {
 	private final CategoryRepository categoryRepository;
 
 	@Override
-	public ProductDTO createProduct(ProductDTO productDto, User user) throws UserException {
-		Store store = storeRepository.findById(productDto.getStoreId()).orElseThrow(() -> new UserException("Store not found"));
+	public ProductDTO createProduct(ProductDTO productDto, User user) throws Exception {
+		Store store = storeRepository.findById(productDto.getStoreId()).orElseThrow(() -> new Exception("Store not found"));
 		
-		Category category = categoryRepository.findById(productDto.getCategoryId()).orElseThrow(() -> new UserException("Category not found"));
+		Category category = categoryRepository.findById(productDto.getCategoryId()).orElseThrow(() -> new Exception("Category not found"));
 		
 		Product product = ProductMapper.toEntity(productDto, store, category);
 		Product savedProduct = productRepository.save(product);
@@ -42,8 +41,8 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public ProductDTO updateProduct(Long id, ProductDTO prodDto, User user)  throws UserException {
-		Product product = productRepository.findById(id).orElseThrow(() -> new UserException("Product not found"));
+	public ProductDTO updateProduct(Long id, ProductDTO prodDto, User user)  throws Exception {
+		Product product = productRepository.findById(id).orElseThrow(() -> new Exception("Product not found"));
 		
 		product.setName(prodDto.getName());
 		product.setDescription(prodDto.getDescription());
@@ -55,7 +54,7 @@ public class ProductServiceImpl implements ProductService {
 		product.setUpdatedAt(LocalDateTime.now());
 		
 		if(prodDto.getCategoryId() != null) {
-			Category category = categoryRepository.findById(prodDto.getCategoryId()).orElseThrow(() -> new UserException("Category not found"));
+			Category category = categoryRepository.findById(prodDto.getCategoryId()).orElseThrow(() -> new Exception("Category not found"));
 			
 			if(category != null) {
 				product.setCategory(category);
@@ -67,8 +66,8 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public void deleteProduct(Long id, User user) throws UserException {
-		Product product = productRepository.findById(id).orElseThrow(() -> new UserException("Product not found"));
+	public void deleteProduct(Long id, User user) throws Exception {
+		Product product = productRepository.findById(id).orElseThrow(() -> new Exception("Product not found"));
 		productRepository.delete(product);
 	}
 

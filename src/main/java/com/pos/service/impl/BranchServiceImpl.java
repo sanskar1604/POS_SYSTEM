@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.pos.exception.UserException;
 import com.pos.mapper.BranchMapper;
 import com.pos.model.Branch;
 import com.pos.model.Store;
@@ -38,8 +37,8 @@ public class BranchServiceImpl implements BranchService {
 	}
 
 	@Override
-	public BranchDTO updateBranch(Long id, BranchDTO branchDto) throws UserException {
-		Branch existingBranch = branchRepository.findById(id).orElseThrow(() -> new UserException("Branch not exists"));
+	public BranchDTO updateBranch(Long id, BranchDTO branchDto) throws Exception {
+		Branch existingBranch = branchRepository.findById(id).orElseThrow(() -> new Exception("Branch not exists"));
 		
 		existingBranch.setName(branchDto.getName());
 		existingBranch.setAddress(branchDto.getAddress());
@@ -55,8 +54,8 @@ public class BranchServiceImpl implements BranchService {
 	}
 
 	@Override
-	public void deleteBranch(Long id) throws UserException {
-		Branch existingBranch = branchRepository.findById(id).orElseThrow(() -> new UserException("Branch not exists"));
+	public void deleteBranch(Long id) throws Exception {
+		Branch existingBranch = branchRepository.findById(id).orElseThrow(() -> new Exception("Branch not exists"));
 		branchRepository.delete(existingBranch);
 	}
 
@@ -67,8 +66,8 @@ public class BranchServiceImpl implements BranchService {
 	}
 
 	@Override
-	public BranchDTO getBranchById(Long id) throws UserException {
-		Branch existingBranch = branchRepository.findById(id).orElseThrow(() -> new UserException("Branch not exists"));
+	public BranchDTO getBranchById(Long id) throws Exception {
+		Branch existingBranch = branchRepository.findById(id).orElseThrow(() -> new Exception("Branch not exists"));
 		
 		return BranchMapper.toDTO(existingBranch);
 	}

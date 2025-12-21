@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.pos.domain.StoreStatus;
-import com.pos.exception.UserException;
 import com.pos.mapper.StoreMapper;
 import com.pos.model.Store;
 import com.pos.model.StoreContact;
@@ -32,8 +31,8 @@ public class StoreServiceImpl implements StoreService {
 	}
 
 	@Override
-	public StoreDTO getStoreById(Long id) throws UserException {
-		Store store = storeRepository.findById(id).orElseThrow(() -> new UserException("Store not found"));
+	public StoreDTO getStoreById(Long id) throws Exception {
+		Store store = storeRepository.findById(id).orElseThrow(() -> new Exception("Store not found"));
 		return StoreMapper.toDTO(store);
 	}
 
@@ -50,11 +49,11 @@ public class StoreServiceImpl implements StoreService {
 	}
 
 	@Override
-	public StoreDTO updateStore(Long id, StoreDTO storeDto) throws UserException {
+	public StoreDTO updateStore(Long id, StoreDTO storeDto) throws Exception {
 		User currentUser = userService.getCurrentUser();
 		Store existingStore = storeRepository.findByStoreAdminId(currentUser.getId());
 		if(existingStore == null) {
-			throw new UserException("Store not found");
+			throw new Exception("Store not found");
 		}
 		
 		existingStore.setBrand(storeDto.getBrand());
@@ -85,10 +84,10 @@ public class StoreServiceImpl implements StoreService {
 	}
 
 	@Override
-	public StoreDTO getStoreByEmployee() throws UserException {
+	public StoreDTO getStoreByEmployee() throws Exception {
 		User currentUser = userService.getCurrentUser();
 		if(currentUser == null) {
-			throw new UserException("You don't have permission to access this store");
+			throw new Exception("You don't have permission to access this store");
 		}
 		
 		return StoreMapper.toDTO(currentUser.getStore());

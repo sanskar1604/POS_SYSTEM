@@ -8,11 +8,11 @@ import com.pos.payload.dto.CategoryDTO;
 public interface CategoryService {
 
 	
-	CategoryDTO createCategory(CategoryDTO categoryDto) throws UserException;
+	CategoryDTO createCategory(CategoryDTO categoryDto) throws Exception;
 	
 	List<CategoryDTO> getCategoriesByStore(Long storeId);
 	
-	CategoryDTO updateCategory(CategoryDTO categoryDto, Long id) throws UserException;
+	CategoryDTO updateCategory(CategoryDTO categoryDto, Long id) throws Exception;
 	
-	void deleteCategory(Long id) throws UserException;
+	void deleteCategory(Long id) throws UserException, Exception;
 }

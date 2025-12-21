@@ -30,19 +30,19 @@ public class InventoryController {
 	
 	@PostMapping
 	@Operation(summary = "Create Inventory")
-	public ResponseEntity<InventoryDTO> createInventory(@RequestBody InventoryDTO inventoryDto){
+	public ResponseEntity<InventoryDTO> createInventory(@RequestBody InventoryDTO inventoryDto) throws Exception{
 		return ResponseEntity.ok(inventoryService.createInventory(inventoryDto));
 	}
 	
 	@PutMapping("/{id}")
 	@Operation(summary = "Update Inventory")
-	public ResponseEntity<InventoryDTO> updateInventory(@PathVariable Long id, @RequestBody InventoryDTO inventoryDto){
+	public ResponseEntity<InventoryDTO> updateInventory(@PathVariable Long id, @RequestBody InventoryDTO inventoryDto) throws Exception{
 		return ResponseEntity.ok(inventoryService.updateInventory(id, inventoryDto));
 	}
 	
 	@DeleteMapping("/{id}")
 	@Operation(summary = "Delete Inventory")
-	public ResponseEntity<ApiResponse> deleteInventory(@PathVariable Long id){
+	public ResponseEntity<ApiResponse> deleteInventory(@PathVariable Long id) throws Exception{
 		inventoryService.deleteInventory(id);
 		
 		ApiResponse apiResponse = new ApiResponse();

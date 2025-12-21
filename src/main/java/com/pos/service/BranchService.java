@@ -8,13 +8,13 @@ import com.pos.payload.dto.BranchDTO;
 
 public interface BranchService {
 
-	BranchDTO createBranch(BranchDTO branchDto) throws UserException ;
+	BranchDTO createBranch(BranchDTO branchDto) throws Exception ;
 	
-	BranchDTO updateBranch(Long id, BranchDTO branchDto) throws UserException ;
+	BranchDTO updateBranch(Long id, BranchDTO branchDto) throws Exception ;
 	
-	void deleteBranch(Long id) throws UserException ;
+	void deleteBranch(Long id) throws Exception ;
 	
 	List<BranchDTO> getAllBranchByStoreId(Long storeId);
 	
-	BranchDTO getBranchById(Long id) throws UserException ;
+	BranchDTO getBranchById(Long id) throws Exception ;
 }

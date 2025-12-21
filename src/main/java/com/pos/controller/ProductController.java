@@ -35,7 +35,7 @@ public class ProductController {
 	
 	@PostMapping
 	@Operation(summary = "Create Products")
-	public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO productDTO, @RequestHeader("Authorization") String jwt){
+	public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO productDTO, @RequestHeader("Authorization") String jwt) throws Exception{
 		User user = userService.getUserFromJwtToken(jwt);
 		return ResponseEntity.ok(productService.createProduct(productDTO, user));
 	}
@@ -48,7 +48,7 @@ public class ProductController {
 	
 	@PutMapping("/{id}")
 	@Operation(summary = "Update product by product id")
-	public ResponseEntity<ProductDTO> updateProduct(@PathVariable Long id, @RequestBody ProductDTO productDTO, @RequestHeader("Authorization") String jwt){
+	public ResponseEntity<ProductDTO> updateProduct(@PathVariable Long id, @RequestBody ProductDTO productDTO, @RequestHeader("Authorization") String jwt) throws Exception{
 		User user = userService.getUserFromJwtToken(jwt);
 		return ResponseEntity.ok(productService.updateProduct(id, productDTO, user));
 	}
@@ -61,7 +61,7 @@ public class ProductController {
 	
 	@DeleteMapping("/{id}")
 	@Operation(summary = "Delete product by product id")
-	public ResponseEntity<ApiResponse> deleteProduct(@PathVariable Long id,  @RequestHeader("Authorization") String jwt){
+	public ResponseEntity<ApiResponse> deleteProduct(@PathVariable Long id,  @RequestHeader("Authorization") String jwt) throws Exception{
 		User user = userService.getUserFromJwtToken(jwt);
 		productService.deleteProduct(id, user);
 		ApiResponse apiResponse = new ApiResponse();
