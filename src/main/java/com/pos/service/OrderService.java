@@ -8,15 +8,15 @@ import com.pos.payload.dto.OrderDTO;
 
 public interface OrderService {
 
-	OrderDTO createOrder(OrderDTO orderDto);
+	OrderDTO createOrder(OrderDTO orderDto) throws Exception;
 	
-	OrderDTO getOrderById(Long orderId);
+	OrderDTO getOrderById(Long orderId) throws Exception;
 	
 	List<OrderDTO> getOrderByBranch(Long branchId, Long customerId, Long cashierId, PaymentType paymentType, OrderStatus status);
 	
 	List<OrderDTO> getOrderByCashier(Long cashierId);
 	
-	void deleteOrder(Long orderId);
+	void deleteOrder(Long orderId) throws Exception;
 	
 	List<OrderDTO> getTodayOrdersByBranch(Long branchId);
 	
